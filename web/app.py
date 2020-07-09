@@ -37,7 +37,7 @@ class Register(Resource):
 
         retJson = {
             "status": 200,
-            "msg": "You successfully signed up for the API"
+            "msg": "You successfully signed up for the API. You have been granted 10 tokens, use them wisely!"
         }
         return jsonify(retJson)
 
