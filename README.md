@@ -14,7 +14,7 @@ You are a user who wants to save some special sentence.
 
 - Make sure you have Docker installed on your OS
 - Download this repo
-- do a `docker-compose build` in the root of this repo, then `docker-compose up`
+- do a `docker-compose build` at the root of the downloaded repo, then `docker-compose up`
 - api available locally at http://0.0.0.0:5000
 
 
