@@ -140,9 +140,79 @@ class Get(Resource):
         return jsonify(retJson)
 
 
+class Update(Resource):
+    def put(self):
+        """
+        allows user to update his sentence at he cost of one token
+        :return:
+        """
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+        text = data["sentence"]
+
+        check_user(username, password)
+        num_tokens = verify_tokens(username)
+        users.update({
+            "Username": username}, {
+            "$set": {
+                "Sentence": text,
+                "Tokens": num_tokens - 1
+            }
+        })
+
+        retJson = {
+            "status": 200,
+            "msg": "Your sentence has been updated! You have {0} tokens left".format(num_tokens - 1)
+        }
+        return jsonify(retJson)
+
+
+class Delete(Resource):
+    def delete(self):
+        """
+        delete sentence only or the whole account, according, to full deletion key set to True or not, for free
+        :return: json
+        """
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+        fullDeletion = data["fullDeletion"]
+
+        check_user(username, password)
+        num_tokens = verify_tokens(username)
+
+        sentence = users.find({
+            "Username": username
+        })[0]["Sentence"]
+        if fullDeletion:
+            users.find_one_and_delete({
+                "Username": username,
+            })
+            retJson = {
+                "status": 200,
+                "msg": "Your account has been deleted!"
+            }
+        else:
+            users.update({
+                "Username": username}, {
+                "$set": {
+                    "Sentence": "",
+                }
+            })
+            retJson = {
+                "status": 200,
+                "msg": "Your sentence has been deleted!"
+            }
+
+        return jsonify(retJson)
+
+
 api.add_resource(Register, '/register')
 api.add_resource(Store, '/store')
 api.add_resource(Get, '/get')
+api.add_resource(Update, '/update')
+api.add_resource(Delete, '/delete')
 
 
 if __name__ == "__main__":

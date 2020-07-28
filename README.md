@@ -9,6 +9,8 @@ You are a user who wants to save some special sentence.
 - With this registration, you will be granted 10 tokens
 - To store your sentence, send POST request with  this JSON {"username": *your_username*, "password": *your password*,"sentence": *your_sentence*} to "/store" route,it will cost you one token
 - To get your sentence, send POST request with  this JSON {"username": *your_username*, "password": *your password*} to "/get" route, it will cost you one token
+- To update your sentence, send PUT request {"username": *your_username*, "password": *your password*, "sentence": *your_sentence*} }to "/update" route, it will cost you one token
+- To delete your sentence, send DELETE request {"username": *your_username*, "password": *your password*, "fullDeletion": False} , set fullDeletion key to True if you want to delete your account as well, for free
 
 ## Installation
 
